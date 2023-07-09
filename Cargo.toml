@@ -1,0 +1,18 @@
+[package]
+edition = "2021"
+name = "rust_llm_utils"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dotenv = "0.15"
+hyper = { version = "0.14", features = ["full"] }
+hyper-tls = "0.5.0"
+lazy_static = "1.4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0" }
+tokio = { version = "1", features = ["full"] }
+
+[lib]
+doctest = false

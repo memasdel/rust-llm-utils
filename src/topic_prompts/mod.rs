@@ -1,6 +1,8 @@
 /// `programming::rust::fix_code:FixRustCode` is just an example of how to use TopicPrompt.
 pub mod programming;
 
+pub mod test_prompts;
+
 /// `TopicPrompt` is a prompt for specific kind of a question. It is like a
 /// template that allow the developer to centralize the formulating of the question
 /// or request to an LLM. The actual prompts sent to the LLMs can then be

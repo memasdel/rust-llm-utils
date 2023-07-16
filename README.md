@@ -7,6 +7,11 @@ services, so that using the LLMs become as seamless as possible.
 
 # Road map 🛣🏔
 * [x] Make it easy to generate prompt templates and execute them on OpenAI API.
+* [ ] Add different prompt types
+	* [/] single shot
+	* [/] multi shot
+	* [ ] Self-Consistency
+	* [ ] chain of thought
 * [ ] Make it easy to generate prompts that generate prompts and then execute them.
 * [ ] Introduce a concept of workflow, which is a chain of prompts, maybe call
   it `PromptFlow`.

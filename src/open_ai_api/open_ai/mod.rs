@@ -134,12 +134,14 @@ impl<'a> OpenAiClient<'a> {
         Self { model, token }
     }
 
-    pub async fn perform_request(
-        &self,
-        topic_prompt: &impl TopicPrompt,
-    ) -> Result<OpenAiSimplifiedResponse, String> {
+    // TODO: rename to reflect the fact that this creates a Model specific prompt
+    pub async fn perform_request(&self, prompt: &str) -> Result<OpenAiSimplifiedResponse, String> {
+        // pub async fn perform_request(
+        //     &self,
+        //     topic_prompt: &impl TopicPrompt,
+        // ) -> Result<OpenAiSimplifiedResponse, String> {
         // generate a prompt that can be sent to OpenAI
-        let prompt = self.generate_prompt(topic_prompt);
+        let prompt = self.generate_prompt(prompt);
 
         // call OpenAI
         let open_ai_completions_response_body = self
@@ -182,13 +184,12 @@ impl<'a> OpenAiClient<'a> {
         Ok(parsed_body)
     }
 
+    // TODO: rename to reflect the fact that this creates a Model specific prompt
     /// returns a ready prompt request that can be posted to OpenAI's API
-    pub fn generate_prompt(&self, topic_prompt: &impl TopicPrompt) -> String {
-        let query = topic_prompt.query();
-        let escaped_query = query.replace("\n", "\\n");
-
-        // an example how we could further refine the query
-        let _query_with_instructions = r#"could you place the result of the following query to a JSON with a field `result`: {escaped_query}"#;
+    pub fn generate_prompt(&self, prompt: &str) -> String {
+        // pub fn generate_prompt(&self, topic_prompt: &impl TopicPrompt) -> String {
+        // let query = topic_prompt.query();
+        let escaped_query = prompt.replace("\n", "\\n");
 
         let prompt = Prompt {
             messages: vec![Message {

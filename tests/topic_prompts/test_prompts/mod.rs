@@ -1,5 +1,5 @@
 use crate::topic_prompts::TopicPrompt;
-use crate::MultiShotQuestionsAndAnswers;
+use rust_llm_utils::MultiShotQuestionsAndAnswers;
 
 /// This is an example of implementing `TopicPrompt`. This is for prompting to
 /// fix non running Rust code.

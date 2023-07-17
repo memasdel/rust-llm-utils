@@ -1,8 +1,7 @@
-use crate::topic_prompts::TopicPrompt;
+use crate::PromptType;
 use dotenv::dotenv;
 use hyper::body::to_bytes;
-use hyper::Client;
-use hyper::{Body, Method, Request};
+use hyper::{Body, Client, Method, Request};
 use hyper_tls::HttpsConnector;
 use lazy_static::lazy_static;
 use serde::{Deserialize, Serialize};
@@ -135,13 +134,11 @@ impl<'a> OpenAiClient<'a> {
     }
 
     // TODO: rename to reflect the fact that this creates a Model specific prompt
-    pub async fn perform_request(&self, prompt: &str) -> Result<OpenAiSimplifiedResponse, String> {
-        // pub async fn perform_request(
-        //     &self,
-        //     topic_prompt: &impl TopicPrompt,
-        // ) -> Result<OpenAiSimplifiedResponse, String> {
-        // generate a prompt that can be sent to OpenAI
-        let prompt = self.generate_prompt(prompt);
+    pub async fn perform_request(
+        &self,
+        prompt: &PromptType,
+    ) -> Result<OpenAiSimplifiedResponse, String> {
+        let prompt = self.generate_prompt(&prompt.prompt());
 
         // call OpenAI
         let open_ai_completions_response_body = self
@@ -187,9 +184,7 @@ impl<'a> OpenAiClient<'a> {
     // TODO: rename to reflect the fact that this creates a Model specific prompt
     /// returns a ready prompt request that can be posted to OpenAI's API
     pub fn generate_prompt(&self, prompt: &str) -> String {
-        // pub fn generate_prompt(&self, topic_prompt: &impl TopicPrompt) -> String {
-        // let query = topic_prompt.query();
-        let escaped_query = prompt.replace("\n", "\\n");
+        let escaped_query = prompt.replace('\n', "\\n");
 
         let prompt = Prompt {
             messages: vec![Message {

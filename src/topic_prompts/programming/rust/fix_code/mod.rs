@@ -23,13 +23,13 @@ use crate::topic_prompts::TopicPrompt;
 /// the above `simplified_response_result.answer` would contain a sting:
 ///
 /// ````
-///	Certainly! The issue with the code you provided is that the function `some_func`
+/// Certainly! The issue with the code you provided is that the function `some_func`
 /// is declared to return a `String`, but it is not actually returning a `String`
 /// value. To fix this, you can modify the code as follows:
 ///
 /// ```
 /// fn some_func() -> String {
-///    String::from("abc")
+///     String::from("abc")
 /// }
 /// ```
 ///
@@ -46,7 +46,7 @@ impl TopicPrompt for FixRustCode {
         self.query.clone()
     }
 
-    fn new(code_to_fix: String) -> Self {
+    fn new_from_prompt_template(code_to_fix: String) -> Self {
         let augmented_query = format!(
             r#"Could you help me to fix this Rust code:
 ```rust

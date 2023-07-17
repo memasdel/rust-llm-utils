@@ -2,10 +2,11 @@
 mod tests {
 
     use rust_llm_utils::programming::rust::fix_code::FixRustCode;
+    use rust_llm_utils::test_prompts::MultiShotQuestionsAndAnswersWeatherInTwoLanguages;
     use rust_llm_utils::test_prompts::WeatherInTwoLanguages;
+    use rust_llm_utils::MultiShotExampleCount;
     use rust_llm_utils::TopicPrompt;
-    use rust_llm_utils::{MultiShot, MultiShotExampleCount};
-    use rust_llm_utils::{OpenAiClient, OpenAiSimplifiedResponse};
+    use rust_llm_utils::{OpenAiClient, OpenAiSimplifiedResponse, PromptType};
 
     #[tokio::test]
     async fn should_be_able_to_make_prompt_to_api() {
@@ -14,19 +15,22 @@ mod tests {
 
         // we have these prompt templates, which are like templates
         // this one is correcting Rust code
-        let prompt = FixRustCode::new(rust_code_to_fix).query();
+        let prompt = FixRustCode::new_from_prompt_template(rust_code_to_fix).query();
 
+        let fix_rust_zero_shot_prompt = PromptType::new_zero_shot_prompt(prompt);
         // we create the client with defaults
         let open_ai_client = OpenAiClient::new(None, None);
 
         // then we make the call with the prompt
-        let simplified_response_result = open_ai_client.perform_request(&prompt).await;
+        let simplified_response_result = open_ai_client
+            .perform_request(&fix_rust_zero_shot_prompt)
+            .await;
 
         assert!(simplified_response_result.is_ok());
 
         // then we get the response to our question from the response
         if let Ok(simplified_response) = simplified_response_result {
-            print_banner(&prompt, simplified_response);
+            print_banner(&fix_rust_zero_shot_prompt.prompt(), simplified_response);
             return;
         } else {
             println!("Error: {:?}", simplified_response_result.err());
@@ -40,12 +44,15 @@ mod tests {
 
         // we have these prompt templates, which are like templates
         // this one is correcting Rust code
-        let prompt = WeatherInTwoLanguages::new(weather_statement);
+        let prompt = WeatherInTwoLanguages::new_from_prompt_template(weather_statement);
 
-        let prompt_wrapped_in_prompt_type =
-            WeatherInTwoLanguages::wrap_to_prompt_type(prompt.query(), MultiShotExampleCount::Tree);
+        let weather_in_two_languages_qa = MultiShotQuestionsAndAnswersWeatherInTwoLanguages {};
+        let prompt_wrapped_in_prompt_type = PromptType::new_multi_shot_prompt(
+            prompt.query(),
+            weather_in_two_languages_qa,
+            MultiShotExampleCount::Tree,
+        );
 
-        dbg!(&prompt_wrapped_in_prompt_type);
         // we create the client with defaults
         let open_ai_client = OpenAiClient::new(None, None);
 
@@ -58,7 +65,7 @@ mod tests {
 
         // then we get the response to our question from the response
         if let Ok(simplified_response) = simplified_response_result {
-            print_banner(&prompt_wrapped_in_prompt_type, simplified_response);
+            print_banner(&prompt_wrapped_in_prompt_type.prompt(), simplified_response);
             return;
         } else {
             println!("Error: {:?}", simplified_response_result.err());

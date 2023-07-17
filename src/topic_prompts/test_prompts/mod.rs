@@ -1,5 +1,5 @@
 use crate::topic_prompts::TopicPrompt;
-use crate::{MultiShot, MultiShotQuestionsAndAnswers};
+use crate::MultiShotQuestionsAndAnswers;
 
 /// This is an example of implementing `TopicPrompt`. This is for prompting to
 /// fix non running Rust code.
@@ -24,7 +24,7 @@ use crate::{MultiShot, MultiShotQuestionsAndAnswers};
 /// the above `simplified_response_result.answer` would contain a sting:
 ///
 /// ````
-///	Certainly! The issue with the code you provided is that the function `some_func`
+/// Certainly! The issue with the code you provided is that the function `some_func`
 /// is declared to return a `String`, but it is not actually returning a `String`
 /// value. To fix this, you can modify the code as follows:
 ///
@@ -47,7 +47,7 @@ impl TopicPrompt for WeatherInTwoLanguages {
         self.query.clone()
     }
 
-    fn new(weather_statement: String) -> Self {
+    fn new_from_prompt_template(weather_statement: String) -> Self {
         let augmented_query = format!(
             r#"Could you generate a statement about the weather based on the weather condition statement in similar style as my examples above.
 {weather_statement}
@@ -63,7 +63,7 @@ impl TopicPrompt for WeatherInTwoLanguages {
 pub struct MultiShotQuestionsAndAnswersWeatherInTwoLanguages;
 
 impl MultiShotQuestionsAndAnswers for MultiShotQuestionsAndAnswersWeatherInTwoLanguages {
-    fn multi_shot_questions_and_answers() -> [String; 5] {
+    fn multi_shot_questions_and_answers(&self) -> [String; 5] {
         let qa_1 =
             r#"prompt: it is 25c and sunny in Berlin, answer: it seems like summer weather. Es sieht aus wie Sommerwetter ☀️
 "#.to_string();
@@ -81,8 +81,4 @@ impl MultiShotQuestionsAndAnswers for MultiShotQuestionsAndAnswersWeatherInTwoLa
 "#.to_string();
         [qa_1, qa_2, qa_3, qa_4, qa_5]
     }
-}
-
-impl MultiShot for WeatherInTwoLanguages {
-    type MultiShotQuestionsAndAnswers = MultiShotQuestionsAndAnswersWeatherInTwoLanguages;
 }

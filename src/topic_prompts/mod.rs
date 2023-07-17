@@ -1,4 +1,3 @@
-/// `programming::rust::fix_code:FixRustCode` is just an example of how to use TopicPrompt.
 pub mod programming;
 
 pub mod test_prompts;
@@ -20,6 +19,6 @@ pub mod test_prompts;
 /// prompts. At that point having it as a trait and being able to define common
 /// behavior will become more useful.
 pub trait TopicPrompt {
-    fn new(input: String) -> Self;
+    fn new_from_prompt_template(input: String) -> Self;
     fn query(&self) -> String;
 }

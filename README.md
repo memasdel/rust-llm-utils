@@ -7,7 +7,7 @@ services, so that using the LLMs become as seamless as possible.
 
 # Road map 🛣🏔
 * [x] Make it easy to generate prompt templates and execute them on OpenAI API.
-* [/] Add different prompt types
+* [x] Add different prompt types
 	* [x] single shot
 	* [x] multi shot
 * [ ] Add calls tp Llama 2

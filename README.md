@@ -7,11 +7,10 @@ services, so that using the LLMs become as seamless as possible.
 
 # Road map 🛣🏔
 * [x] Make it easy to generate prompt templates and execute them on OpenAI API.
-* [ ] Add different prompt types
-	* [/] single shot
-	* [/] multi shot
-	* [ ] Self-Consistency
-	* [ ] chain of thought
+* [/] Add different prompt types
+	* [x] single shot
+	* [x] multi shot
+* [ ] Add calls tp Llama 2
 * [ ] Make it easy to generate prompts that generate prompts and then execute them.
 * [ ] Allow defining JSON schemas for responses
 * [ ] Allow defining Rust types for responses
@@ -20,7 +19,6 @@ services, so that using the LLMs become as seamless as possible.
 * [ ] "Memory" and summarizing functionality.
 * [ ] Persistance for the "memory".
 * [ ] Allow executing same prompts parallel in several LLMs.
-* [ ] Add prompt requests and make it easy to call llama
 * [ ] Make this a node dep and allow calling from TypeScript
 * [ ] Use some more polished SDKs for the LLM calls.
 

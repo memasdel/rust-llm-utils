@@ -1,19 +1,20 @@
 # Rust LLM Utils 🦀🤖🛠
 
-This project aims to be a generic starting point for me to experiment with LLMs
-in Rust applications. It should offer easy API to perform requests to LLM
-services, so that using the LLMs become as seamless as possible.
+This project is a framework for building LLM enabled Rust applications. It tries to identify the largest possible set of functionality which is common between projects, and write it once here.
+
+If all goes well, this framework will contain just the right level of abstraction, so that the consumers can truely avoid writing non interesting part of their applications, while still be open enough to cover all necessary use cases.
 
 
 # Road map 🛣🏔
 * [x] Make it easy to generate prompt templates and execute them on OpenAI API.
-* [x] Add different prompt types
-	* [x] single shot
-	* [x] multi shot
-* [ ] Add calls to Llama 2
+* [x] Add different prompt types:
+	* [x] Single shot
+	* [x] Few shot
+* [ ] Add calls to Llama 2.
+* [ ] create macro for defining LLM templates using Rust function signatures.
 * [ ] Make it easy to generate prompts that generate prompts and then execute them.
-* [ ] Allow defining JSON schemas for responses
-* [ ] Allow defining Rust types for responses
+* [ ] Allow defining JSON schemas for responses.
+* [ ] Allow defining Rust types for responses.
 * [ ] Introduce a concept of workflow, which is a chain of prompts, maybe call
   it `PromptFlow`.
 * [ ] "Memory" and summarizing functionality.
